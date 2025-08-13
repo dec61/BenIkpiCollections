@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEN-IKPI COLLECTIONS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Algerian&display=swap" rel="stylesheet">
+    <style>
+        .algerian-font {
+            font-family: 'Algerian', serif;
+        }
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #bbb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-h-screen">
+    <!-- Header -->
+    <header class="bg-black bg-opacity-50 backdrop-blur-sm py-6 mb-8">
+        <div class="container mx-auto px-4">
+            <h1 class="algerian-font text-4xl md:text-6xl font-bold text-center text-white mb-4 tracking-wider">
+                BEN-IKPI COLLECTIONS
+            </h1>
+            <div class="flex items-center justify-center text-white">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                </svg>
+                <span id="location" class="text-lg">📍 Location will appear here</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 max-w-6xl">
+        <!-- Upload Section -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-white border-opacity-20">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Upload Your Photos</h2>
+            
+            <!-- Location Input -->
+            <div class="mb-6">
+                <label class="block text-white text-sm font-medium mb-2">Your Location</label>
+                <input type="text" id="locationInput" placeholder="Enter your location..." 
+                       class="w-full px-4 py-3 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent">
+            </div>
+
+            <!-- Single Image Upload -->
+            <div class="mb-6">
+                <label class="block text-white text-sm font-medium mb-2">Upload Single Image</label>
+                <div class="border-2 border-dashed border-white border-opacity-30 rounded-lg p-6 text-center hover:border-opacity-50 transition-colors">
+                    <input type="file" id="singleImageInput" accept="image/*" class="hidden">
+                    <button onclick="document.getElementById('singleImageInput').click()" 
+                            class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        Choose Single Image
+                    </button>
+                    <p class="text-gray-300 mt-2">Click to upload a single photo</p>
+                </div>
+            </div>
+
+            <!-- Multiple Images Upload -->
+            <div class="mb-6">
+                <label class="block text-white text-sm font-medium mb-2">Upload Multiple Images</label>
+                <div class="border-2 border-dashed border-white border-opacity-30 rounded-lg p-6 text-center hover:border-opacity-50 transition-colors">
+                    <input type="file" id="multipleImageInput" accept="image/*" multiple class="hidden">
+                    <button onclick="document.getElementById('multipleImageInput').click()" 
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        Choose Multiple Images
+                    </button>
+                    <p class="text-gray-300 mt-2">Click to upload multiple photos at once</p>
+                </div>
+            </div>
+
+            <button onclick="updateLocation()" 
+                    class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                Update Location
+            </button>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border border-white border-opacity-20">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Photo Gallery</h2>
+            <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Sample images will be added here -->
+                <div class="gallery-item bg-white bg-opacity-20 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white text-4xl">📸</span>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white text-sm">Sample Photo 1</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-white bg-opacity-20 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                        <span class="text-white text-4xl">🌟</span>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white text-sm">Sample Photo 2</p>
+                    </div>
+                </div>
+                <div class="gallery-item bg-white bg-opacity-20 rounded-lg overflow-hidden cursor-pointer">
+                    <div class="h-48 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center">
+                        <span class="text-white text-4xl">🎨</span>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-white text-sm">Sample Photo 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for viewing images -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        let photoCounter = 4;
+
+        // Handle single image upload
+        document.getElementById('singleImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addImageToGallery(e.target.result, file.name);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle multiple images upload
+        document.getElementById('multipleImageInput').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    addImageToGallery(e.target.result, file.name);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Add image to gallery
+        function addImageToGallery(imageSrc, imageName) {
+            const gallery = document.getElementById('gallery');
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'gallery-item bg-white bg-opacity-20 rounded-lg overflow-hidden cursor-pointer';
+            imageDiv.innerHTML = `
+                <img src="${imageSrc}" alt="${imageName}" class="w-full h-48 object-cover" onclick="openModal('${imageSrc}')">
+                <div class="p-4">
+                    <p class="text-white text-sm">${imageName}</p>
+                </div>
+            `;
+            gallery.appendChild(imageDiv);
+        }
+
+        // Update location
+        function updateLocation() {
+            const locationInput = document.getElementById('locationInput');
+            const locationDisplay = document.getElementById('location');
+            if (locationInput.value.trim()) {
+                locationDisplay.textContent = `📍 ${locationInput.value}`;
+                locationInput.value = '';
+                
+                // Show success message
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Location Updated!';
+                button.classList.add('bg-green-600');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-600');
+                }, 2000);
+            }
+        }
+
+        // Modal functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Add click functionality to sample images
+        document.addEventListener('DOMContentLoaded', function() {
+            const sampleImages = document.querySelectorAll('.gallery-item');
+            sampleImages.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    // Create a sample image for demonstration
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 400;
+                    canvas.height = 300;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Create gradient background
+                    const gradients = [
+                        ['#ff6b6b', '#4ecdc4'],
+                        ['#45b7d1', '#96ceb4'],
+                        ['#feca57', '#ff9ff3']
+                    ];
+                    const gradient = ctx.createLinearGradient(0, 0, 400, 300);
+                    gradient.addColorStop(0, gradients[index % 3][0]);
+                    gradient.addColorStop(1, gradients[index % 3][1]);
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, 400, 300);
+                    
+                    // Add text
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 24px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`Sample Photo ${index + 1}`, 200, 150);
+                    
+                    openModal(canvas.toDataURL());
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96df8d38a4a673da',t:'MTc1NDk5NzI5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
